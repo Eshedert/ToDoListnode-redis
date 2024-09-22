@@ -12,6 +12,7 @@
     "./packages/*"
   ],
   "scripts": {
+    "start": "ts-node app.ts",
     "test": "npm run test -ws --if-present",
     "build:client": "npm run build -w ./packages/client",
     "build:test-utils": "npm run build -w ./packages/test-utils",
@@ -24,17 +25,22 @@
   },
   "dependencies": {
     "@redis/bloom": "1.2.0",
-    "@redis/client": "1.6.0",
+    "@redis/client": "^1.6.0",
     "@redis/graph": "1.1.1",
     "@redis/json": "1.0.7",
     "@redis/search": "1.2.0",
-    "@redis/time-series": "1.1.0"
+    "@redis/time-series": "1.1.0",
+    "@types/express": "^4.17.21",
+    "express": "^4.21.0",
+    "redis": "^4.7.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@tsconfig/node14": "^14.1.0",
+    "@types/node": "^22.5.5",
     "gh-pages": "^6.0.0",
     "release-it": "^16.1.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.6.2"
   },
   "repository": {
     "type": "git",
@@ -46,5 +52,10 @@
   "homepage": "https://github.com/redis/node-redis",
   "keywords": [
     "redis"
-  ]
+  ],
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "author": ""
 }
