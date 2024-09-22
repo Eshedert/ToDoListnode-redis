@@ -48,3 +48,10 @@ const PORT = process.env.APP_PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
 });
+
+// Ruta para obtener las tareas almacenadas (para depuración)
+app.get('/debug-tasks', (req, res) => {
+    redisClient.lRange('todos', 0, -1)
+      .then(todos => res.json(todos))
+      .catch(err => res.status(500).send("Error fetching tasks from Redis"));
+  });  
