@@ -18,10 +18,21 @@ redisClient.connect().catch(err => {
 
 // Página principal con la lista ToDo
 app.get('/', (req, res) => {
-  redisClient.lRange('todos', 0, -1)
-    .then(todos => res.render('index', { todos }))
-    .catch(err => res.status(500).send("Error connecting to Redis"));
-});
+    let todos, completed;
+    redisClient.lRange('todos', 0, -1)
+      .then(result => {
+        todos = result;
+        return redisClient.lRange('completed', 0, -1);  // Obtener tareas completadas
+      })
+      .then(result => {
+        completed = result;
+        res.render('index', { todos, completed });  // Renderizar ambas listas
+      })
+      .catch(err => {
+        console.error("Error conectando a Redis", err);
+        res.status(500).send("Error connecting to Redis");
+      });
+  });
 
 // Agregar una nueva tarea
 app.post('/add', (req, res) => {

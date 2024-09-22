@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToDo List</title>
+  <title>Listas de Tareas</title>
   <link rel="stylesheet" href="/styles.css">
+  <!-- Si usas Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <div class="container">
-    <h1>ToDo List</h1>
+    <h1>Lista de Tareas</h1>
     
     <form action="/add" method="POST">
-      <input type="text" name="task" placeholder="New task" required>
-      <button type="submit">Add</button>
+      <input type="text" name="task" placeholder="Nueva tarea" required>
+      <button type="submit">+ Agregar</button>
     </form>
-    
+
+    <h2>Tareas Pendientes</h2>
     <ul>
-      <% todos.forEach(function(todo) { %>
+        <% todos.forEach(function(todo) { %>
+          <li>
+            <span class="task-text"><%= todo %></span>
+            <div class="task-actions">
+              <form action="/complete" method="POST" class="inline-form">
+                <input type="hidden" name="task" value="<%= todo %>">
+                <!-- Ícono de tilde para completar -->
+                <button type="submit" class="icon-btn complete-btn"><i class="fas fa-check"></i></button>
+              </form>
+              <form action="/delete" method="POST" class="inline-form">
+                <input type="hidden" name="task" value="<%= todo %>">
+                <!-- Ícono de basurero para eliminar -->
+                <button type="submit" class="icon-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
+              </form>
+            </div>
+          </li>
+        <% }) %>
+    </ul>      
+    <h2>Tareas Completadas</h2>
+    <ul>
+      <% completed.forEach(function(task) { %>
         <li>
-          <span><%= todo %></span>
-          <form action="/complete" method="POST" class="inline-form">
-            <input type="hidden" name="task" value="<%= todo %>">
-            <button type="submit">Complete</button>
-          </form>
-          <form action="/delete" method="POST" class="inline-form">
-            <input type="hidden" name="task" value="<%= todo %>">
-            <button type="submit" class="delete-btn">Delete</button>
-          </form>
+          <span class="completed-task"><%= task %></span>
         </li>
       <% }) %>
     </ul>
